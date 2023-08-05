@@ -4,10 +4,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     const dataCategorie = await reponse.json();
     console.log(dataCategorie);
 
-    const introduction = document.getElementById("introduction");
     const portfolio = document.getElementById("portfolio");
     const contact = document.getElementById("contact");
 
+    // section Portfolio
     const h2 = document.createElement("h2");
     h2.innerHTML = "Mes Projets";
     portfolio.appendChild(h2);
