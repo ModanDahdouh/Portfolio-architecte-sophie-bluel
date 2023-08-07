@@ -223,7 +223,7 @@ li:hover {
     border-radius: 60px;
     background: #1d6154;
     width: 100%;
-    max-width: 198px;
+    max-width: 100px;
     height: 37px;
     justify-content: center;
     align-items: center;
@@ -245,6 +245,24 @@ li:hover {
     justify-content: center;
     align-items: center;
 }
+[id="1"] {
+    color: blue;
+    width: 100%;
+    max-width: 100px;
+}
+
+[id="2"] {
+    color: violet;
+    width: 100%;
+    max-width: 157px;
+}
+
+[id="3"] {
+    color: red;
+    width: 100%;
+    max-width: 198px;
+}
+
 .gallery {
     width: 100%;
     display: grid;
