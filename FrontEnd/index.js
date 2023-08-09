@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const filterAll = document.createElement("div");
     filterAll.classList.add("filtersTous");
     filterAll.textContent = "Tous";
+    filterAll.style.cursor = "pointer";
     filter.appendChild(filterAll);
 
     // Ajouter les filtres de catégorie
@@ -34,6 +35,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         filterCategory.classList.add("filters");
         filterCategory.textContent = category.name;
         filterCategory.id = category.id;
+        filterCategory.style.cursor = "pointer";
         filter.appendChild(filterCategory);
     });
 
