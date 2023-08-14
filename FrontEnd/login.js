@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(data);
 
             if (response.ok && data.userId) {
+                localStorage.setItem("userId", "true");
                 // Si la connexion réussit, redirigez l'utilisateur vers une autre page
                 window.location.href = "../Frontend/index.html"; // Correction de la faute de frappe
             } else {

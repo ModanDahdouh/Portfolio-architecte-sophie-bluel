@@ -22,6 +22,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     filter.classList.add("filter");
     portfolio.appendChild(filter);
 
+    const filtre = document.querySelector(".filter");
+    const isLoggedIn = localStorage.getItem("userId");
+
+    if (isLoggedIn === "true") {
+        filtre.style.display = "none";
+    } else {
+        filtre.style.display = "flex";
+    }
+
     // Ajouter le filtre "Tous"
     const filterAll = document.createElement("div");
     filterAll.classList.add("filtersTous");
@@ -60,7 +69,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Ajouter la galerie au portfolio
     portfolio.appendChild(gallery);
-
     // Gestionnaire d'événement de clic pour chaque filtre
     const filters = document.querySelectorAll(".filters");
     filters.forEach((filter) => {
