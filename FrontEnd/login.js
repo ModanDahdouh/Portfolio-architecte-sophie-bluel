@@ -31,14 +31,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Si la connexion réussit, redirigez l'utilisateur vers une autre page
                 window.location.href = "../Frontend/index.html"; // Correction de la faute de frappe
             } else {
-                // Si la connexion échoue, affichez un message d'erreur
-                errorMessage.textContent =
-                    "Identifiants incorrects. Veuillez réessayer.";
+                if (response.status === 401) {
+                    errorMessage.textContent =
+                        "Mot de passe incorrect. Veuillez réessayer.";
+                } else if (response.status === 404) {
+                    errorMessage.textContent =
+                        "Identifiants incorrects. Veuillez réessayer.";
+                } else {
+                    errorMessage.textContent =
+                        "Une erreur est survenue. Veuillez réessayer ultérieurement.";
+                }
             }
         } catch (error) {
             console.error("Erreur lors de la connexion :", error);
             errorMessage.textContent =
                 "Une erreur est survenue. Veuillez réessayer ultérieurement.";
         }
+    });
+    const logoutButton = document.getElementById("logout-button");
+
+    logoutButton.addEventListener("click", async () => {
+        localStorage.removeItem("userId", "true");
     });
 });

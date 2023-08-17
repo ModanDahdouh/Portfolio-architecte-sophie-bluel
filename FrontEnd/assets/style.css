@@ -186,6 +186,9 @@ a {
 .login-link-a:hover {
     color: #b1663c;
 }
+#logout-button {
+    border: none;
+}
 /* form login */
 
 .login-container {
@@ -294,19 +297,19 @@ a {
     align-items: center;
 }
 [id="1"] {
-    color: blue;
+    color: #1d6154;
     width: 100%;
     max-width: 100px;
 }
 
 [id="2"] {
-    color: violet;
+    color: #1d6154;
     width: 100%;
     max-width: 157px;
 }
 
 [id="3"] {
-    color: red;
+    color: #1d6154;
     width: 100%;
     max-width: 198px;
 }

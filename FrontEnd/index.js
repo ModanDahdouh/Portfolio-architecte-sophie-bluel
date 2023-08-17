@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     } else {
         filtre.style.display = "flex";
     }
-
     // Ajouter le filtre "Tous"
     const filterAll = document.createElement("div");
     filterAll.classList.add("filtersTous");
