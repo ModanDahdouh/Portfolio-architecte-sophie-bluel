@@ -23,12 +23,23 @@ document.addEventListener("DOMContentLoaded", async function () {
     portfolio.appendChild(filter);
 
     const filtre = document.querySelector(".filter");
-    const isLoggedIn = localStorage.getItem("userId");
+
+    const loginLink = document.getElementById("login-link");
+
+    const loginLink__a = document.createElement("a");
+    loginLink__a.classList.add("login-link-a");
+    loginLink__a.innerText = "login";
+    loginLink__a.href = "login.html";
+    loginLink.appendChild(loginLink__a);
+
+    const isLoggedIn = localStorage.getItem("userId", "true");
 
     if (isLoggedIn === "true") {
         filtre.style.display = "none";
+        loginLink__a.innerText = "logout";
     } else {
         filtre.style.display = "flex";
+        loginLink__a.innerText = "login";
     }
     // Ajouter le filtre "Tous"
     const filterAll = document.createElement("div");
