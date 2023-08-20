@@ -251,10 +251,35 @@ a {
 #introduction p {
     margin-bottom: 0.5em;
 }
+
+.modifierProfil {
+    display: flex;
+}
+
 #portfolio h2 {
     text-align: center;
-    margin-bottom: 1em;
 }
+
+.boxTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+}
+.h2Projet {
+    margin-bottom: 0;
+}
+
+.svgElement {
+    display: none;
+}
+.buttonModifierGallerie {
+    border: none;
+    display: none;
+    font-family: Work Sans;
+    font-size: 14px;
+}
+
 .filter {
     display: flex;
     gap: 15px;
@@ -365,6 +390,183 @@ input[type="submit"] {
     width: 180px;
     text-align: center;
     border-radius: 60px;
+}
+
+#modaleGallery {
+    display: flex;
+    width: 630px;
+    height: 731px;
+    border-radius: 10px;
+    background-color: #fff;
+    margin: 65px auto;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.svg {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    left: 280px;
+    bottom: 30px;
+}
+
+.h2 {
+    color: #000;
+    text-align: center;
+    font-family: Work Sans;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.galleryModale {
+    margin-top: 40px;
+    width: 420px;
+    height: 420px;
+    background: #fff;
+    border-bottom: 1px solid #b3b3b3;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.btnModale {
+    display: flex;
+    width: 237px;
+    height: 36px;
+    border-radius: 60px;
+    background: #1d6154;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    border: none;
+}
+
+#link {
+    width: 230px;
+
+    color: #d65353;
+    text-align: center;
+    font-family: Syne;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 30px;
+}
+
+#categoryForm {
+    display: flex;
+    width: 630px;
+    height: 731px;
+    border-radius: 10px;
+    background-color: #fff;
+    margin: 65px auto;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.categoryForm__img {
+    width: 90%;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    bottom: 45px;
+}
+
+.h2__ajoutPhoto {
+    color: #000;
+    text-align: center;
+    font-family: Work Sans;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 10px;
+}
+
+.ajoutImg {
+    width: 420px;
+    display: flex;
+    height: 169px;
+    border-radius: 3px;
+    background: #e8f1f6;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+.svg-img {
+    margin-bottom: 15px;
+}
+
+.label__titre {
+    padding-right: 380px;
+    margin: 30px 0 10px 0;
+    color: #3d3d3d;
+}
+.label__category {
+    padding-right: 340px;
+    bottom: 20px;
+    margin: 10px 0 10px 0;
+    color: #3d3d3d;
+}
+.AjoutePhoto {
+    width: 173px;
+    display: flex;
+    height: 36px;
+    border-radius: 50px;
+    background: #cbd6dc;
+    align-items: center;
+    justify-content: center;
+    color: #306685;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 5px;
+}
+.p__ajoutePhotos {
+    color: #444;
+    text-align: center;
+    font-family: Work Sans;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+#titre,
+#categorie {
+    width: 420px;
+    height: 51px;
+    background: #fff;
+    box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+    border: none;
+    color: #6c6c6c;
+    margin-bottom: 20px;
+}
+#categorie {
+    margin-bottom: 50px;
+}
+
+.line {
+    width: 420px;
+    border-bottom: 1px solid #b3b3b3;
+    margin-bottom: 30px;
+}
+.btn-ajoutPhotos {
+    width: 237px;
+    height: 36px;
+    border-radius: 60px;
+    background: #a7a7a7;
+    border: none;
+    color: #fff;
 }
 
 footer nav ul {
