@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const body = document.querySelectorAll("body");
-    console.log(body);
+    const body = document.querySelector("body");
     // Sélectionner l'élément "portfolio"
     const portfolio = document.getElementById("portfolio");
 
@@ -35,8 +34,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     buttonModifierGallerie.addEventListener("click", () => {
         document.body.style.backgroundColor = "rgba(0, 0, 0, 0.30)";
+
         modaleGallery.style.display = "flex";
-        modaleGallery.style.position = "absolute";
         buttonModifierGallerie.style.display = "none";
         localStorage.setItem("modaleOpen", "true");
     });
@@ -46,7 +45,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     const svg = document.createElementNS(svgNS, "svg");
     svg.classList.add("svg");
 
-    // Définissez les attributs SVG
     svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
     svg.setAttribute("width", "24");
     svg.setAttribute("height", "24");
@@ -88,6 +86,29 @@ document.addEventListener("DOMContentLoaded", async function () {
     btnModale.classList.add("btnModale");
     btnModale.textContent = "Ajouter une photo";
     modaleGallery.appendChild(btnModale);
+
+    const categoriesForm = document.getElementById("categoryForm");
+    const svgFlecheReturn = document.querySelector(".svgFlecheReturn");
+    btnModale.addEventListener("click", () => {
+        categoriesForm.style.display = "flex";
+    });
+    svgFlecheReturn.addEventListener("click", () => {
+        categoriesForm.style.display = "none";
+    });
+    const svg2 = document.querySelector(".svg2");
+    svg2.addEventListener("click", () => {
+        document.body.style.backgroundColor = "#fff";
+        categoriesForm.style.display = "none";
+        modaleGallery.style.display = "none";
+        buttonModifierGallerie.style.display = "flex";
+    });
+
+    let ajouterPhotoLabel = document.querySelector(".AjoutePhoto");
+    let photoInput = document.getElementById("photoInput");
+
+    ajouterPhotoLabel.addEventListener("click", function () {
+        photoInput.click();
+    });
 
     // Créer un élément <a>
     const link = document.createElement("a");
@@ -157,6 +178,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         loginLink__a.innerText = "logout";
         modaleGallery.style.display = "none";
     } else {
+        modaleGallery.style.display = "none";
         filtre.style.display = "flex";
         loginLink__a.innerText = "login";
         buttonModifierGallerie.style.display = "none";
@@ -177,6 +199,14 @@ document.addEventListener("DOMContentLoaded", async function () {
         filterCategory.style.cursor = "pointer";
         filter.appendChild(filterCategory);
     });
+    // ajoute categories au form
+    const categorieSelect = document.getElementById("categorie");
+    dataCategories.forEach((category) => {
+        const option = document.createElement("option");
+        option.value = category.id;
+        option.textContent = category.name;
+        categorieSelect.appendChild(option);
+    });
 
     // Créer la galerie d'œuvres
     const gallery = document.createElement("div");
@@ -185,6 +215,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Ajouter les images et légendes des œuvres
     dataWorks.forEach((work) => {
         const figure = document.createElement("figure");
+        figure.classList.add("figure");
         gallery.appendChild(figure);
 
         const img = document.createElement("img");
@@ -198,6 +229,47 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     portfolio.appendChild(gallery);
+
+    buttonModifierGallerie.addEventListener("click", function () {
+        // Clone la galerie existante
+        let galleryClone = gallery.cloneNode(true);
+
+        galleryClone.style.display = "grid";
+        galleryClone.style.gridTemplateColumns = "1fr 1fr 1fr 1fr 1fr";
+        galleryClone.style.gridColumnGap = "5px";
+
+        let newTitle = "éditer";
+
+        // Sélectionnez tous les éléments figure de la galerie clonée
+        let figuresToModify = galleryClone.querySelectorAll("figure");
+
+        // Parcourez tous les éléments figure pour mettre à jour le titre et la taille des images
+        figuresToModify.forEach((figure) => {
+            let figcaption = figure.querySelector("figcaption");
+            figcaption.textContent = newTitle;
+
+            figure.style.position = "relative";
+            figure.style.width = "20px";
+
+            let img = figure.querySelector("img");
+            figure.style.width = "78px";
+            img.style.width = "78.123px";
+            img.style.height = "104.08px";
+
+            let deleteIconSrc = "./assets/icons/trash-can-solid.png"; // Remplacez par le chemin de votre propre icône
+
+            let deleteIcon = document.createElement("img");
+            deleteIcon.classList.add("deleteIcon");
+            deleteIcon.src = deleteIconSrc;
+            deleteIcon.alt = "Supprimer";
+
+            figure.appendChild(deleteIcon);
+        });
+
+        // Remplacez le contenu de la galerie modale par le clone modifié
+        galleryModale.innerHTML = ""; // Efface tout contenu existant dans la galerie modale
+        galleryModale.appendChild(galleryClone);
+    });
 
     // Gestionnaire d'événement de clic pour chaque filtre
     const filters = document.querySelectorAll(".filters");

@@ -188,6 +188,7 @@ a {
 }
 #logout-button {
     border: none;
+    background-color: rgb(0 0 0 / 0%);
 }
 /* form login */
 
@@ -278,6 +279,7 @@ a {
     display: none;
     font-family: Work Sans;
     font-size: 14px;
+    background-color: rgb(0 0 0 / 0%);
 }
 
 .filter {
@@ -394,6 +396,8 @@ input[type="submit"] {
 
 #modaleGallery {
     display: flex;
+    position: fixed;
+    top: 50px;
     width: 630px;
     height: 731px;
     border-radius: 10px;
@@ -429,7 +433,17 @@ input[type="submit"] {
     background: #fff;
     border-bottom: 1px solid #b3b3b3;
     overflow: hidden;
-    overflow-y: scroll;
+}
+img.deleteIcon {
+    width: 9px;
+    height: 11px;
+}
+.deleteIcon {
+    position: absolute;
+    top: 6px;
+    left: 61px;
+    width: 9px;
+    height: 11px;
 }
 
 .btnModale {
@@ -459,17 +473,20 @@ input[type="submit"] {
 }
 
 #categoryForm {
-    display: flex;
+    display: none;
+    position: fixed;
+    top: 52px;
     width: 630px;
     height: 731px;
     border-radius: 10px;
     background-color: #fff;
-    margin: 65px auto;
+    margin: 65px 253px;
     justify-content: center;
+    z-index: 20;
+    /* right: 396px; */
     align-items: center;
     flex-direction: column;
 }
-
 .categoryForm__img {
     width: 90%;
     display: flex;
@@ -550,6 +567,7 @@ input[type="submit"] {
     border: none;
     color: #6c6c6c;
     margin-bottom: 20px;
+    outline: none;
 }
 #categorie {
     margin-bottom: 50px;
