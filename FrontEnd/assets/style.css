@@ -268,11 +268,12 @@ a {
     align-items: baseline;
 }
 .h2Projet {
-    margin-bottom: 0;
+    margin: 5rem 30px 0 0;
 }
 
 .svgElement {
     display: none;
+    margin: 0 5px 0 0;
 }
 .buttonModifierGallerie {
     border: none;
@@ -402,7 +403,7 @@ input[type="submit"] {
     height: 731px;
     border-radius: 10px;
     background-color: #fff;
-    margin: 65px auto;
+    margin: 65px 250px;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -480,7 +481,7 @@ img.deleteIcon {
     height: 731px;
     border-radius: 10px;
     background-color: #fff;
-    margin: 65px 253px;
+    margin: 65px 250px;
     justify-content: center;
     z-index: 20;
     /* right: 396px; */
@@ -548,6 +549,11 @@ img.deleteIcon {
     line-height: normal;
     margin-bottom: 5px;
 }
+
+#imagePreview {
+    width: 129px;
+    height: 193px;
+}
 .p__ajoutePhotos {
     color: #444;
     text-align: center;
@@ -585,6 +591,10 @@ img.deleteIcon {
     background: #a7a7a7;
     border: none;
     color: #fff;
+}
+
+.btn-vert {
+    background-color: #1d6154;
 }
 
 footer nav ul {

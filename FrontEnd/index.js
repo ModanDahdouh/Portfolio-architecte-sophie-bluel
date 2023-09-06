@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const modaleGallery = document.createElement("div");
     modaleGallery.id = "modaleGallery";
     modaleGallery.style.display = "none";
-    title.appendChild(modaleGallery);
+    body.appendChild(modaleGallery);
 
     const isButtonHidden = localStorage.getItem("buttonHidden") === "true";
     if (isButtonHidden) {
@@ -106,9 +106,84 @@ document.addEventListener("DOMContentLoaded", async function () {
     let ajouterPhotoLabel = document.querySelector(".AjoutePhoto");
     let photoInput = document.getElementById("photoInput");
 
-    ajouterPhotoLabel.addEventListener("click", function () {
-        photoInput.click();
+    ajouterPhotoLabel.addEventListener("click", function () {});
+    const imagePreview = document.getElementById("imagePreview");
+    const AjoutePhoto = document.querySelector(".AjoutePhoto");
+    const p__ajoutePhotos = document.querySelector(".p__ajoutePhotos");
+    const svgImg = document.querySelector(".svgImg");
+    photoInput.addEventListener("change", function () {
+        const selectedFile = photoInput.files[0];
+        if (selectedFile) {
+            const objectURL = URL.createObjectURL(selectedFile);
+            imagePreview.src = objectURL;
+            imagePreview.style.display = "block";
+            p__ajoutePhotos.style.display = "none";
+            AjoutePhoto.style.display = "none";
+            svgImg.style.display = "none";
+        } else {
+            imagePreview.src = "";
+            imagePreview.style.display = "none";
+        }
     });
+
+    const validerBtn = document.getElementById("validerBtn");
+
+    validerBtn.addEventListener("click", function (event) {
+        event.preventDefault(); // Empêche la soumission du formulaire par défaut
+
+        fetch("http://localhost:5678/api/works", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization:
+                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5NDAwMjYyMywiZXhwIjoxNjk0MDg5MDIzfQ.jNeZ-nerJyjhpoDpZ5QW0Q22MYY7uEuPKGfPMcqSuk4",
+            },
+            body: JSON.stringify({
+                id: 0,
+                title: "",
+                imageUrl: "",
+                categoryId: "",
+                userId: 0,
+            }),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    // La demande a réussi
+                    console.log("L'image a été ajoutée avec succès !");
+                } else {
+                    // La demande a échoué
+                    console.error("Erreur lors de l'ajout de l'image.");
+                }
+            })
+            .catch((error) => {
+                console.error("Une erreur s'est produite :", error);
+            });
+    });
+
+    const inputs = document.querySelectorAll("input, select");
+
+    const validerBtnform = document.querySelector(".btn-ajoutPhotos");
+
+    function checkFormValidity() {
+        let allFieldsValid = true;
+        inputs.forEach((input) => {
+            if (!input.checkValidity()) {
+                allFieldsValid = false;
+                return;
+            }
+        });
+
+        if (allFieldsValid) {
+            validerBtnform.classList.add("btn-vert");
+        } else {
+            validerBtnform.classList.remove("btn-vert");
+        }
+    }
+    inputs.forEach((input) => {
+        input.addEventListener("input", checkFormValidity);
+    });
+
+    checkFormValidity();
 
     // Créer un élément <a>
     const link = document.createElement("a");
