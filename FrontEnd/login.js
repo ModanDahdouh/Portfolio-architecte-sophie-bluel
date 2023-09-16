@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok && data.userId) {
                 localStorage.setItem("userId", "true");
-
+                localStorage.setItem("token", data.token);
                 window.location.href = "../Frontend/index.html";
             } else {
                 if (response.status === 401) {

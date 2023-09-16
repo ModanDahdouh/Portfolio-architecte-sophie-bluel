@@ -113,6 +113,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const svgImg = document.querySelector(".svgImg");
     photoInput.addEventListener("change", function () {
         const selectedFile = photoInput.files[0];
+
         if (selectedFile) {
             const objectURL = URL.createObjectURL(selectedFile);
             imagePreview.src = objectURL;
@@ -126,25 +127,25 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     });
 
+    const testCat = document.querySelector("#categorie");
+    const titleTest = document.querySelector("#titre");
     const validerBtn = document.getElementById("validerBtn");
 
     validerBtn.addEventListener("click", function (event) {
+        let data = new FormData();
+
+        data.append("image", photoInput.files[0]);
+        data.append("title", titleTest.value);
+        data.append("category", parseInt(testCat.value));
+
         event.preventDefault(); // Empêche la soumission du formulaire par défaut
 
         fetch("http://localhost:5678/api/works", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                Authorization:
-                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5NDAwMjYyMywiZXhwIjoxNjk0MDg5MDIzfQ.jNeZ-nerJyjhpoDpZ5QW0Q22MYY7uEuPKGfPMcqSuk4",
+                authorization: `Bearer ${localStorage.token}`,
             },
-            body: JSON.stringify({
-                id: 0,
-                title: "",
-                imageUrl: "",
-                categoryId: "",
-                userId: 0,
-            }),
+            body: data,
         })
             .then((response) => {
                 if (response.ok) {
@@ -301,10 +302,22 @@ document.addEventListener("DOMContentLoaded", async function () {
         const figcaption = document.createElement("figcaption");
         figcaption.textContent = work.title;
         figure.appendChild(figcaption);
+
+        // // Ajouter un gestionnaire d'événements de clic à chaque image
+        // img.addEventListener("click", function () {
+        //     // Supprimer l'image du DOM
+        //     gallery.removeChild(figure);
+
+        //     // Supprimer l'élément de données correspondant à l'image
+        //     dataWorks.splice(index, 1);
+
+        //     // Vous pouvez également effectuer d'autres actions, telles que la suppression de l'image du serveur, si nécessaire.
+        // });
     });
 
     portfolio.appendChild(gallery);
 
+    // Ajoutez un gestionnaire d'événements au clic sur le bouton "Modifier la galerie"
     buttonModifierGallerie.addEventListener("click", function () {
         // Clone la galerie existante
         let galleryClone = gallery.cloneNode(true);
@@ -327,9 +340,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             figure.style.width = "20px";
 
             let img = figure.querySelector("img");
-            figure.style.width = "78px";
-            img.style.width = "78.123px";
-            img.style.height = "104.08px";
+            img.style.width = "78px";
+            img.style.height = "104px"; // Ajustez la hauteur comme nécessaire
 
             let deleteIconSrc = "./assets/icons/trash-can-solid.png"; // Remplacez par le chemin de votre propre icône
 
@@ -338,6 +350,19 @@ document.addEventListener("DOMContentLoaded", async function () {
             deleteIcon.src = deleteIconSrc;
             deleteIcon.alt = "Supprimer";
 
+            // Ajoutez un gestionnaire d'événements de clic à chaque icône de corbeille
+            deleteIcon.addEventListener("click", function () {
+                // Sélectionnez le parent (figure) de l'icône de corbeille
+                const parentFigure = deleteIcon.closest("figure");
+
+                // Supprimez le parent (figure) de l'icône de corbeille de la galerie
+                parentFigure.remove();
+                gallery.removeChild(parentFigure);
+
+                // Supprimez l'élément figure de la galerie modale
+                galleryModale.removeChild(parentFigure);
+            });
+
             figure.appendChild(deleteIcon);
         });
 
@@ -345,6 +370,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         galleryModale.innerHTML = ""; // Efface tout contenu existant dans la galerie modale
         galleryModale.appendChild(galleryClone);
     });
+
+    // const responseDelete = await fetch(`http://localhost:5678/api/works${id}`, {
+    //     method: "DELETE",
+    //     headers: {
+    //         Authorization: `Bearer ${localStorage.token}`, // Assurez-vous d'inclure les en-têtes nécessaires
+    //     },
+    // });
 
     // Gestionnaire d'événement de clic pour chaque filtre
     const filters = document.querySelectorAll(".filters");
