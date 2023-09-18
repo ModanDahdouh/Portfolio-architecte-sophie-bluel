@@ -73,6 +73,41 @@ document.addEventListener("DOMContentLoaded", async function () {
         localStorage.setItem("buttonHidden", "true");
     });
 
+    if (modaleGallery && buttonModifierGallerie) {
+        buttonModifierGallerie.addEventListener("click", (event) => {
+            event.stopPropagation(); // Empêche la propagation du clic au corps (body)
+            modaleGallery.style.display = "flex"; // Affiche la modale
+        });
+
+        document.body.addEventListener("click", (event) => {
+            if (
+                event.target !== modaleGallery &&
+                !modaleGallery.contains(event.target)
+            ) {
+                modaleGallery.style.display = "none";
+                categoriesForm.style.display = "none";
+                // buttonModifierGallerie.style.display = "flex";
+                document.body.style.backgroundColor = "#fff";
+            }
+        });
+    }
+    // if (categoriesForm && btnModale) {
+    //     btnModale.addEventListener("click", (event) => {
+    //         event.stopPropagation(); // Empêche la propagation du clic au corps (body)
+    //         categoriesForm.style.display = "flex"; // Affiche la deuxième modale
+    //     });
+
+    //     document.body.addEventListener("click", (event) => {
+    //         if (
+    //             event.target !== categoriesForm &&
+    //             !categoriesForm.contains(event.target)
+    //         ) {
+    //             categoriesForm.style.display = "none";
+    //             // Autres actions liées à la deuxième galerie ici
+    //         }
+    //     });
+    // }
+
     const h2modale = document.createElement("h2");
     h2modale.classList.add("h2");
     h2modale.textContent = "Galerie photo";
@@ -292,6 +327,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     dataWorks.forEach((work) => {
         const figure = document.createElement("figure");
         figure.classList.add("figure");
+        figure.setAttribute("data-work-id", work.id);
         gallery.appendChild(figure);
 
         const img = document.createElement("img");
@@ -302,17 +338,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         const figcaption = document.createElement("figcaption");
         figcaption.textContent = work.title;
         figure.appendChild(figcaption);
-
-        // // Ajouter un gestionnaire d'événements de clic à chaque image
-        // img.addEventListener("click", function () {
-        //     // Supprimer l'image du DOM
-        //     gallery.removeChild(figure);
-
-        //     // Supprimer l'élément de données correspondant à l'image
-        //     dataWorks.splice(index, 1);
-
-        //     // Vous pouvez également effectuer d'autres actions, telles que la suppression de l'image du serveur, si nécessaire.
-        // });
     });
 
     portfolio.appendChild(gallery);
@@ -349,18 +374,17 @@ document.addEventListener("DOMContentLoaded", async function () {
             deleteIcon.classList.add("deleteIcon");
             deleteIcon.src = deleteIconSrc;
             deleteIcon.alt = "Supprimer";
+            deleteIcon.dataset.id = figure.getAttribute("data-work-id");
 
             // Ajoutez un gestionnaire d'événements de clic à chaque icône de corbeille
             deleteIcon.addEventListener("click", function () {
-                // Sélectionnez le parent (figure) de l'icône de corbeille
-                const parentFigure = deleteIcon.closest("figure");
+                const workId = this.getAttribute("data-id"); // Get the work ID
 
-                // Supprimez le parent (figure) de l'icône de corbeille de la galerie
-                parentFigure.remove();
-                gallery.removeChild(parentFigure);
+                // Call a function to delete the work using its ID
+                deleteWork(workId);
 
-                // Supprimez l'élément figure de la galerie modale
-                galleryModale.removeChild(parentFigure);
+                // Remove the figure from the gallery
+                figure.remove();
             });
 
             figure.appendChild(deleteIcon);
@@ -371,12 +395,29 @@ document.addEventListener("DOMContentLoaded", async function () {
         galleryModale.appendChild(galleryClone);
     });
 
-    // const responseDelete = await fetch(`http://localhost:5678/api/works${id}`, {
-    //     method: "DELETE",
-    //     headers: {
-    //         Authorization: `Bearer ${localStorage.token}`, // Assurez-vous d'inclure les en-têtes nécessaires
-    //     },
-    // });
+    async function deleteWork(workId) {
+        try {
+            const response = await fetch(
+                `http://localhost:5678/api/works/${workId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${localStorage.token}`,
+                    },
+                }
+            );
+
+            if (response.ok) {
+                console.log(
+                    `Work with ID ${workId} has been deleted successfully.`
+                );
+            } else {
+                console.error(`Failed to delete work with ID ${workId}.`);
+            }
+        } catch (error) {
+            console.error("An error occurred while deleting the work:", error);
+        }
+    }
 
     // Gestionnaire d'événement de clic pour chaque filtre
     const filters = document.querySelectorAll(".filters");
