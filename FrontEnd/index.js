@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const isModaleOpen = localStorage.getItem("modaleOpen") === "true";
     if (isModaleOpen) {
         modaleGallery.style.display = "flex";
-        buttonModifierGallerie.style.display = "none";
+        // buttonModifierGallerie.style.display = "none";
     } else {
         localStorage.setItem("modaleOpen", "false");
     }
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.body.style.backgroundColor = "rgba(0, 0, 0, 0.30)";
 
         modaleGallery.style.display = "flex";
-        buttonModifierGallerie.style.display = "none";
+        // buttonModifierGallerie.style.display = "none";
         localStorage.setItem("modaleOpen", "true");
     });
 
@@ -93,8 +93,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     // if (categoriesForm && btnModale) {
     //     btnModale.addEventListener("click", (event) => {
-    //         event.stopPropagation(); // Empêche la propagation du clic au corps (body)
-    //         categoriesForm.style.display = "flex"; // Affiche la deuxième modale
+    //         event.stopPropagation();
+    //         categoriesForm.style.display = "flex";
     //     });
 
     //     document.body.addEventListener("click", (event) => {
@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         svgElement.style.display = "flex";
         buttonModifierGallerie.style.display = "flex";
         h2.style.margin = "5rem 0 5rem 0";
-        loginLink__a.innerText = "logout";
+        // loginLink__a.innerText = "logout";
         modaleGallery.style.display = "none";
     } else {
         modaleGallery.style.display = "none";
@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     // Ajouter le filtre "Tous"
     const filterAll = document.createElement("div");
-    filterAll.classList.add("filtersTous");
+    filterAll.classList.add("filtersTous", "filters");
     filterAll.textContent = "Tous";
     filterAll.style.cursor = "pointer";
     filter.appendChild(filterAll);
@@ -310,6 +310,32 @@ document.addEventListener("DOMContentLoaded", async function () {
         filterCategory.style.cursor = "pointer";
         filter.appendChild(filterCategory);
     });
+    const filterCategoryElements = document.querySelectorAll(".filters");
+
+    filterCategoryElements.forEach((filterCategory) => {
+        filterCategory.addEventListener("click", () => {
+            filterCategoryElements.forEach((element) => {
+                element.classList.remove("active");
+            });
+
+            // Mettez en surbrillance le filtre de la catégorie sélectionnée en ajoutant la classe "active"
+            filterCategory.classList.add("active");
+        });
+    });
+
+    // Créez un gestionnaire d'événements de clic pour le filtre "Tous"
+    filterAll.addEventListener("click", () => {
+        // Réinitialisez la couleur de tous les filtres en supprimant la classe "active"
+        filterCategoryElements.forEach((element) => {
+            element.classList.remove("active");
+        });
+
+        // Mettez en surbrillance le filtre "Tous" en ajoutant la classe "active"
+        filterAll.classList.add("active");
+
+        // Vous pouvez également effectuer d'autres actions en fonction de la sélection "Tous" ici
+    });
+
     // ajoute categories au form
     const categorieSelect = document.getElementById("categorie");
     dataCategories.forEach((category) => {

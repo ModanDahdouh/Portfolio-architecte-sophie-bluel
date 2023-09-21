@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Une erreur est survenue. Veuillez réessayer ultérieurement.";
         }
     });
-    const logoutButton = document.getElementById("logout-button");
+    const logoutButton = document.getElementById("projet-button");
     logoutButton.addEventListener("click", async () => {
         localStorage.removeItem("userId", "true");
     });
