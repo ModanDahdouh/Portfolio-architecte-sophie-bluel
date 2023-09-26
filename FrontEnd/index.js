@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             modaleGallery.style.display = "flex"; // Affiche la modale
         });
 
-        document.body.addEventListener("click", (event) => {
+        document.addEventListener("click", (event) => {
             if (
                 event.target !== modaleGallery &&
                 !modaleGallery.contains(event.target)
@@ -91,23 +91,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         });
     }
-    // if (categoriesForm && btnModale) {
-    //     btnModale.addEventListener("click", (event) => {
-    //         event.stopPropagation();
-    //         categoriesForm.style.display = "flex";
-    //     });
-
-    //     document.body.addEventListener("click", (event) => {
-    //         if (
-    //             event.target !== categoriesForm &&
-    //             !categoriesForm.contains(event.target)
-    //         ) {
-    //             categoriesForm.style.display = "none";
-    //             // Autres actions liées à la deuxième galerie ici
-    //         }
-    //     });
-    // }
-
     const h2modale = document.createElement("h2");
     h2modale.classList.add("h2");
     h2modale.textContent = "Galerie photo";
@@ -138,6 +121,14 @@ document.addEventListener("DOMContentLoaded", async function () {
         buttonModifierGallerie.style.display = "flex";
     });
 
+    svgFlecheReturn.addEventListener("click", () => {
+        document.body.style.backgroundColor = "#fff";
+        categoriesForm.style.display = "none";
+    });
+
+    categoriesForm.addEventListener("click", (event) => {
+        event.stopPropagation();
+    });
     let ajouterPhotoLabel = document.querySelector(".AjoutePhoto");
     let photoInput = document.getElementById("photoInput");
 
@@ -317,23 +308,16 @@ document.addEventListener("DOMContentLoaded", async function () {
             filterCategoryElements.forEach((element) => {
                 element.classList.remove("active");
             });
-
-            // Mettez en surbrillance le filtre de la catégorie sélectionnée en ajoutant la classe "active"
             filterCategory.classList.add("active");
         });
     });
 
-    // Créez un gestionnaire d'événements de clic pour le filtre "Tous"
     filterAll.addEventListener("click", () => {
         // Réinitialisez la couleur de tous les filtres en supprimant la classe "active"
         filterCategoryElements.forEach((element) => {
             element.classList.remove("active");
         });
-
-        // Mettez en surbrillance le filtre "Tous" en ajoutant la classe "active"
         filterAll.classList.add("active");
-
-        // Vous pouvez également effectuer d'autres actions en fonction de la sélection "Tous" ici
     });
 
     // ajoute categories au form
@@ -403,19 +387,14 @@ document.addEventListener("DOMContentLoaded", async function () {
             deleteIcon.dataset.id = figure.getAttribute("data-work-id");
 
             // Ajoutez un gestionnaire d'événements de clic à chaque icône de corbeille
-            deleteIcon.addEventListener("click", function () {
-                const workId = this.getAttribute("data-id"); // Get the work ID
-
-                // Call a function to delete the work using its ID
+            deleteIcon.addEventListener("click", function (event) {
+                event.stopPropagation();
+                const workId = this.getAttribute("data-id");
                 deleteWork(workId);
-
-                // Remove the figure from the gallery
-                figure.remove();
             });
 
             figure.appendChild(deleteIcon);
         });
-
         // Remplacez le contenu de la galerie modale par le clone modifié
         galleryModale.innerHTML = ""; // Efface tout contenu existant dans la galerie modale
         galleryModale.appendChild(galleryClone);
