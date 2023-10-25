@@ -210,66 +210,6 @@ inputs.forEach((input) => {
 });
 checkFormValidity();
 
-// const testCat = document.querySelector("#categorie");
-// const titleTest = document.querySelector("#titre");
-// const validerBtn = document.getElementById("validerBtn");
-
-// validerBtn.addEventListener("click", function (event) {
-//     let data = new FormData();
-
-//     data.append("image", photoInput.files[0]);
-//     data.append("title", titleTest.value);
-//     data.append("category", parseInt(testCat.value));
-
-//     event.preventDefault(); // Empêche la soumission du formulaire par défaut
-
-//     fetch("http://localhost:5678/api/works", {
-//         method: "POST",
-//         headers: {
-//             authorization: `Bearer ${localStorage.token}`,
-//         },
-//         body: data,
-//     })
-//         .then((response) => {
-//             if (response.ok) {
-//                 // La demande a réussi
-//                 console.log("L'image a été ajoutée avec succès !");
-//                 checkFormValidity();
-//             } else {
-//                 // La demande a échoué
-//                 console.error("Erreur lors de l'ajout de l'image.");
-//             }
-//         })
-//         .catch((error) => {
-//             console.error("Une erreur s'est produite :", error);
-//         });
-// });
-
-// const inputs = document.querySelectorAll("input, select");
-
-// const validerBtnform = document.querySelector(".btn-ajoutPhotos");
-
-// function checkFormValidity() {
-//     let allFieldsValid = true;
-//     inputs.forEach((input) => {
-//         if (!input.checkValidity()) {
-//             allFieldsValid = false;
-//             return;
-//         }
-//     });
-
-//     if (allFieldsValid) {
-//         validerBtnform.classList.add("btn-vert");
-//     } else {
-//         validerBtnform.classList.remove("btn-vert");
-//     }
-// }
-// inputs.forEach((input) => {
-//     input.addEventListener("input", checkFormValidity);
-// });
-
-// checkFormValidity();
-
 // Créer un élément <a>
 const link = document.createElement("a");
 link.href = "#";
