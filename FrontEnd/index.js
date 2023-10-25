@@ -169,19 +169,15 @@ validerBtn.addEventListener("click", function (event) {
                 Authorization: `Bearer ${localStorage.token}`,
             },
             body: data,
-        })
-            .then((response) => {
-                if (response.ok) {
-                    console.log("L'image a été ajoutée avec succès !");
-                    checkFormValidity();
-                } else {
-                    // La demande a échoué
-                    console.error("Erreur lors de l'ajout de l'image.");
-                }
-            })
-            .catch((error) => {
-                console.error("Une erreur s'est produite :", error);
-            });
+        }).then((response) => {
+            if (response.ok) {
+                console.log("L'image a été ajoutée avec succès !");
+                checkFormValidity();
+            } else {
+                // La demande a échoué
+                console.error("Erreur lors de l'ajout de l'image.");
+            }
+        });
     } catch (error) {
         console.error("Une erreur s'est produite :", error);
     }
