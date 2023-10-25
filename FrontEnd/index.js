@@ -162,28 +162,29 @@ validerBtn.addEventListener("click", function (event) {
     data.append("title", titleTest.value);
     data.append("category", parseInt(testCat.value));
 
-    fetch("http://localhost:5678/api/works", {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${localStorage.token}`,
-        },
-        body: data,
-    })
-        .then((response) => {
-            if (response.ok) {
-                // La demande a réussi
-                console.log("L'image a été ajoutée avec succès !");
-                // Réinitialisez le formulaire après succès (facultatif)
-
-                checkFormValidity();
-            } else {
-                // La demande a échoué
-                console.error("Erreur lors de l'ajout de l'image.");
-            }
+    try {
+        fetch("http://localhost:5678/api/works", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${localStorage.token}`,
+            },
+            body: data,
         })
-        .catch((error) => {
-            console.error("Une erreur s'est produite :", error);
-        });
+            .then((response) => {
+                if (response.ok) {
+                    console.log("L'image a été ajoutée avec succès !");
+                    checkFormValidity();
+                } else {
+                    // La demande a échoué
+                    console.error("Erreur lors de l'ajout de l'image.");
+                }
+            })
+            .catch((error) => {
+                console.error("Une erreur s'est produite :", error);
+            });
+    } catch (error) {
+        console.error("Une erreur s'est produite :", error);
+    }
 });
 
 const inputs = document.querySelectorAll("input, select");
