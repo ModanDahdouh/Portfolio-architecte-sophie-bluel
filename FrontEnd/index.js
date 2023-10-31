@@ -154,6 +154,9 @@ const testCat = document.querySelector("#categorie");
 const titleTest = document.querySelector("#titre");
 const validerBtn = document.getElementById("validerBtn");
 
+const inputs = document.querySelectorAll("input, select");
+const validerBtnform = document.querySelector(".btn-ajoutPhotos");
+
 validerBtn.addEventListener("click", function (event) {
     event.preventDefault(); // Empêche la soumission du formulaire par défaut
 
@@ -172,7 +175,37 @@ validerBtn.addEventListener("click", function (event) {
         }).then((response) => {
             if (response.ok) {
                 console.log("L'image a été ajoutée avec succès !");
-                checkFormValidity();
+
+                if (checkFormValidity) {
+                    imagePreview.src = "";
+                    imagePreview.style.display = "none";
+                    titleTest.value = ""; // Réinitialisez le champ du titre
+                    testCat.value = "";
+                    p__ajoutePhotos.style.display = "flex";
+                    AjoutePhoto.style.display = "flex";
+                    if (svgImg) {
+                        svgImg.style.display = "block";
+                    }
+                }
+                response.json().then((newWork) => {
+                    const figure = document.createElement("figure");
+                    figure.classList.add("figure");
+                    figure.setAttribute("id", newWork.id);
+
+                    figure.dataset.id = newWork.id;
+
+                    const img = document.createElement("img");
+                    img.src = newWork.imageUrl;
+                    img.alt = newWork.title;
+                    figure.appendChild(img);
+
+                    const figcaption = document.createElement("figcaption");
+                    figcaption.textContent = newWork.title;
+                    figure.appendChild(figcaption);
+
+                    // Ajoutez la nouvelle image à la galerie existante
+                    gallery.appendChild(figure);
+                });
             } else {
                 // La demande a échoué
                 console.error("Erreur lors de l'ajout de l'image.");
@@ -182,9 +215,6 @@ validerBtn.addEventListener("click", function (event) {
         console.error("Une erreur s'est produite :", error);
     }
 });
-
-const inputs = document.querySelectorAll("input, select");
-const validerBtnform = document.querySelector(".btn-ajoutPhotos");
 
 function checkFormValidity() {
     let allFieldsValid = true;
@@ -205,6 +235,27 @@ function checkFormValidity() {
 inputs.forEach((input) => {
     input.addEventListener("input", checkFormValidity);
 });
+
+checkFormValidity();
+function checkFormValidity() {
+    let titleValid = titleTest.checkValidity();
+    let categoryValid = testCat.checkValidity();
+    let imageSelected = photoInput.files.length > 0;
+
+    if (imageSelected && titleValid && categoryValid) {
+        validerBtnform.classList.add("btn-vert");
+    } else {
+        validerBtnform.classList.remove("btn-vert");
+    }
+}
+
+inputs.forEach((input) => {
+    input.addEventListener("input", checkFormValidity);
+});
+
+// // Vous pouvez également ajouter un gestionnaire d'événements pour le champ d'upload d'image
+photoInput.addEventListener("change", checkFormValidity);
+
 checkFormValidity();
 
 // Créer un élément <a>
@@ -263,6 +314,7 @@ if (isLoggedIn === "true") {
     buttonModifierGallerie.style.display = "flex";
     h2.style.margin = "5rem 0 5rem 0";
     modaleGallery.style.display = "none";
+    loginLink__a.innerText = "logout";
 } else {
     modaleGallery.style.display = "none";
     filtre.style.display = "flex";
@@ -298,6 +350,7 @@ function createGallery() {
                 figcaption.textContent = work.title;
                 figure.appendChild(figcaption);
             });
+            dataWorks.innerHTML = "";
         });
     });
 }
@@ -374,7 +427,6 @@ function createCategories() {
     fetch("http://localhost:5678/api/categories")
         .then((response) => {
             if (response.status === 500) {
-                // Handle the error if needed
             }
             return response.json();
         })
@@ -402,7 +454,8 @@ function createCategories() {
 }
 
 // Ajoutez un gestionnaire d'événements au clic sur le bouton "Modifier la galerie"
-buttonModifierGallerie.addEventListener("click", function () {
+buttonModifierGallerie.addEventListener("click", () => createModaleGallery());
+function createModaleGallery() {
     // Clone la galerie existante
     let galleryClone = gallery.cloneNode(true);
 
@@ -448,7 +501,7 @@ buttonModifierGallerie.addEventListener("click", function () {
     // Remplacez le contenu de la galerie modale par le clone modifié
     galleryModale.innerHTML = ""; // Efface tout contenu existant dans la galerie modale
     galleryModale.appendChild(galleryClone);
-});
+}
 
 async function deleteWork(workId) {
     try {
