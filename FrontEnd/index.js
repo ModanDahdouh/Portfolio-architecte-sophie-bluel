@@ -176,17 +176,6 @@ validerBtn.addEventListener("click", function (event) {
             if (response.ok) {
                 console.log("L'image a été ajoutée avec succès !");
 
-                if (checkFormValidity) {
-                    imagePreview.src = "";
-                    imagePreview.style.display = "none";
-                    titleTest.value = ""; // Réinitialisez le champ du titre
-                    testCat.value = "";
-                    p__ajoutePhotos.style.display = "flex";
-                    AjoutePhoto.style.display = "flex";
-                    if (svgImg) {
-                        svgImg.style.display = "block";
-                    }
-                }
                 response.json().then((newWork) => {
                     const figure = document.createElement("figure");
                     figure.classList.add("figure");
@@ -202,6 +191,18 @@ validerBtn.addEventListener("click", function (event) {
                     const figcaption = document.createElement("figcaption");
                     figcaption.textContent = newWork.title;
                     figure.appendChild(figcaption);
+
+                    if (checkFormValidity) {
+                        imagePreview.src = "";
+                        imagePreview.style.display = "none";
+                        titleTest.value = ""; // Réinitialisez le champ du titre
+                        testCat.value = "";
+                        p__ajoutePhotos.style.display = "flex";
+                        AjoutePhoto.style.display = "flex";
+                        if (svgImg) {
+                            svgImg.style.display = "block";
+                        }
+                    }
 
                     // Ajoutez la nouvelle image à la galerie existante
                     gallery.appendChild(figure);
@@ -306,15 +307,20 @@ loginLink__a.innerText = "login";
 loginLink__a.href = "login.html";
 loginLink.appendChild(loginLink__a);
 
-const isLoggedIn = localStorage.getItem("userId", "true");
+const isLoggedIn = localStorage.getItem("token");
 
-if (isLoggedIn === "true") {
+if (isLoggedIn) {
     filtre.style.display = "none";
     svgElement.style.display = "flex";
     buttonModifierGallerie.style.display = "flex";
     h2.style.margin = "5rem 0 5rem 0";
     modaleGallery.style.display = "none";
     loginLink__a.innerText = "logout";
+    loginLink__a.href = "";
+    loginLink__a.addEventListener("click", () => {
+        localStorage.removeItem("token");
+        location.reload();
+    });
 } else {
     modaleGallery.style.display = "none";
     filtre.style.display = "flex";
