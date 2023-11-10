@@ -82,7 +82,6 @@ if (modaleGallery && buttonModifierGallerie) {
         ) {
             modaleGallery.style.display = "none";
             categoriesForm.style.display = "none";
-            // buttonModifierGallerie.style.display = "flex";
             document.body.style.backgroundColor = "#fff";
         }
     });
@@ -203,7 +202,6 @@ validerBtn.addEventListener("click", function (event) {
                             svgImg.style.display = "block";
                         }
                     }
-
                     // Ajoutez la nouvelle image à la galerie existante
                     gallery.appendChild(figure);
                 });
@@ -356,12 +354,18 @@ function createGallery() {
                 figcaption.textContent = work.title;
                 figure.appendChild(figcaption);
             });
-            dataWorks.innerHTML = "";
         });
     });
 }
 
 portfolio.appendChild(gallery);
+
+// Ajouter le filtre "Tous"
+const filterAll = document.createElement("div");
+filterAll.classList.add("filtersTous", "filters");
+filterAll.textContent = "Tous";
+filterAll.style.cursor = "pointer";
+filter.appendChild(filterAll);
 
 function createFilter() {
     fetch("http://localhost:5678/api/works").then((res) => {
@@ -377,7 +381,6 @@ function createFilter() {
             filters.forEach((filter) => {
                 filter.addEventListener("click", function () {
                     const categoryId = this.id;
-                    createGallery(dataWorks);
                     filterWorksByCategory(dataWorks, categoryId);
                 });
             });
@@ -395,6 +398,7 @@ function createFilter() {
             function showAllWorks(dataWorks) {
                 updateGallery(dataWorks);
             }
+
             const filterCategoryElements =
                 document.querySelectorAll(".filters");
 
@@ -417,13 +421,6 @@ function createFilter() {
         });
     });
 }
-
-// Ajouter le filtre "Tous"
-const filterAll = document.createElement("div");
-filterAll.classList.add("filtersTous", "filters");
-filterAll.textContent = "Tous";
-filterAll.style.cursor = "pointer";
-filter.appendChild(filterAll);
 
 // ajoute categories au form
 const categorieSelect = document.getElementById("categorie");
@@ -461,6 +458,7 @@ function createCategories() {
 
 // Ajoutez un gestionnaire d'événements au clic sur le bouton "Modifier la galerie"
 buttonModifierGallerie.addEventListener("click", () => createModaleGallery());
+
 function createModaleGallery() {
     // Clone la galerie existante
     let galleryClone = gallery.cloneNode(true);
@@ -485,9 +483,9 @@ function createModaleGallery() {
         let img = figure.querySelector("img");
         img.style.minWidth = "78px";
         img.style.maxWidth = "78px";
-        img.style.height = "104px"; // Ajustez la hauteur comme nécessaire
+        img.style.height = "104px";
 
-        let deleteIconSrc = "./assets/icons/trash-can-solid.png"; // Remplacez par le chemin de votre propre icône
+        let deleteIconSrc = "./assets/icons/trash-can-solid.png";
 
         let deleteIcon = document.createElement("img");
         deleteIcon.classList.add("deleteIcon");
@@ -501,7 +499,6 @@ function createModaleGallery() {
             const workId = this.getAttribute("data-id");
             deleteWork(workId);
         });
-
         figure.appendChild(deleteIcon);
     });
     // Remplacez le contenu de la galerie modale par le clone modifié
@@ -548,7 +545,8 @@ function updateGallery(filteredWorks) {
     gallery.innerHTML = "";
     filteredWorks.forEach((work) => {
         const figure = document.createElement("figure");
-        gallery.appendChild(figure);
+        figure.classList.add("figure");
+        figure.setAttribute("data-id", work.id);
 
         const img = document.createElement("img");
         img.src = work.imageUrl;
@@ -558,6 +556,8 @@ function updateGallery(filteredWorks) {
         const figcaption = document.createElement("figcaption");
         figcaption.textContent = work.title;
         figure.appendChild(figcaption);
+
+        gallery.appendChild(figure);
     });
 }
 

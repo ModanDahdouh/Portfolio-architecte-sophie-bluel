@@ -320,7 +320,6 @@ a {
 [id="1"] {
     color: #1d6154;
     width: 100%;
-    max-width: 100px;
 }
 
 [id="1"].active {
