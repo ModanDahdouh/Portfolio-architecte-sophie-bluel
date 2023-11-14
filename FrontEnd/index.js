@@ -204,6 +204,7 @@ validerBtn.addEventListener("click", function (event) {
                     }
                     // Ajoutez la nouvelle image à la galerie existante
                     gallery.appendChild(figure);
+                    createModaleGallery();
                 });
             } else {
                 // La demande a échoué
