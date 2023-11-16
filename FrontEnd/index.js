@@ -18,11 +18,13 @@ modaleGallery.id = "modaleGallery";
 modaleGallery.style.display = "none";
 body.appendChild(modaleGallery);
 
+// Vérifie si le bouton est masqué enregistré en local
 const isButtonHidden = localStorage.getItem("buttonHidden") === "true";
 if (isButtonHidden) {
     buttonModifierGallerie.style.display = "flex";
 }
 
+// Vérifie si la modale est ouverte enregistrée en local
 const isModaleOpen = localStorage.getItem("modaleOpen") === "true";
 if (isModaleOpen) {
     modaleGallery.style.display = "flex";
@@ -30,6 +32,7 @@ if (isModaleOpen) {
     localStorage.setItem("modaleOpen", "false");
 }
 
+// Gestionnaire de clic sur le bouton pour ouvrir la modale
 buttonModifierGallerie.addEventListener("click", () => {
     document.body.style.backgroundColor = "rgba(0, 0, 0, 0.30)";
     modaleGallery.style.display = "flex";
@@ -86,6 +89,7 @@ if (modaleGallery && buttonModifierGallerie) {
         }
     });
 }
+// Crée un titre pour la modale de la galerie
 const h2modale = document.createElement("h2");
 h2modale.classList.add("h2");
 h2modale.textContent = "Galerie photo";
@@ -102,12 +106,16 @@ modaleGallery.appendChild(btnModale);
 
 const categoriesForm = document.getElementById("categoryForm");
 const svgFlecheReturn = document.querySelector(".svgFlecheReturn");
+
+// Gestionnaire de clic sur le bouton pour afficher le formulaire de catégories
 btnModale.addEventListener("click", () => {
     categoriesForm.style.display = "flex";
 });
+
 svgFlecheReturn.addEventListener("click", () => {
     categoriesForm.style.display = "none";
 });
+// Gestionnaires de clic pour fermer la modale et masquer le formulaire de catégories
 const svg2 = document.querySelector(".svg2");
 svg2.addEventListener("click", () => {
     document.body.style.backgroundColor = "#fff";
@@ -129,10 +137,13 @@ let ajouterPhotoLabel = document.querySelector(".AjoutePhoto");
 let photoInput = document.getElementById("photoInput");
 
 ajouterPhotoLabel.addEventListener("click", function () {});
+
 const imagePreview = document.getElementById("imagePreview");
 const AjoutePhoto = document.querySelector(".AjoutePhoto");
 const p__ajoutePhotos = document.querySelector(".p__ajoutePhotos");
 const svgImg = document.querySelector(".svgImg");
+
+// Gestionnaire d'événement pour la modification de l'input de type fichier
 photoInput.addEventListener("change", function () {
     const selectedFile = photoInput.files[0];
 
@@ -149,22 +160,27 @@ photoInput.addEventListener("change", function () {
     }
 });
 
+// Récupération des éléments du formulaire
 const testCat = document.querySelector("#categorie");
 const titleTest = document.querySelector("#titre");
 const validerBtn = document.getElementById("validerBtn");
 
+// Sélection de tous les champs du formulaire
 const inputs = document.querySelectorAll("input, select");
 const validerBtnform = document.querySelector(".btn-ajoutPhotos");
 
+// Gestionnaire d'événement pour le clic sur le bouton de validation du formulaire
 validerBtn.addEventListener("click", function (event) {
     event.preventDefault(); // Empêche la soumission du formulaire par défaut
 
+    // Création d'un objet FormData pour les données du formulaire
     let data = new FormData();
     data.append("image", photoInput.files[0]);
     data.append("title", titleTest.value);
     data.append("category", parseInt(testCat.value));
 
     try {
+        // Envoi de la requête POST avec les données du formulaire
         fetch("http://localhost:5678/api/works", {
             method: "POST",
             headers: {
@@ -174,7 +190,7 @@ validerBtn.addEventListener("click", function (event) {
         }).then((response) => {
             if (response.ok) {
                 console.log("L'image a été ajoutée avec succès !");
-
+                // Traitement de la réponse JSON pour afficher la nouvelle image
                 response.json().then((newWork) => {
                     const figure = document.createElement("figure");
                     figure.classList.add("figure");
@@ -191,6 +207,7 @@ validerBtn.addEventListener("click", function (event) {
                     figcaption.textContent = newWork.title;
                     figure.appendChild(figcaption);
 
+                    // Réinitialisation des éléments du formulaire après l'ajout de l'image
                     if (checkFormValidity) {
                         imagePreview.src = "";
                         imagePreview.style.display = "none";
@@ -216,6 +233,7 @@ validerBtn.addEventListener("click", function (event) {
     }
 });
 
+// Fonction pour vérifier la validité du formulaire
 function checkFormValidity() {
     let allFieldsValid = true;
     inputs.forEach((input) => {
@@ -237,6 +255,7 @@ inputs.forEach((input) => {
 });
 
 checkFormValidity();
+
 function checkFormValidity() {
     let titleValid = titleTest.checkValidity();
     let categoryValid = testCat.checkValidity();
